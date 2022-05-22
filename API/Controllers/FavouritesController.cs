@@ -36,7 +36,7 @@ namespace API.Controllers
         public async Task<ActionResult<UserFavourite>> Get(int id)
         {
             var data = await _mediator.Send(new Get.Query { id = id });
-            if(data == null) return NotFound();
+            if (data == null) return NotFound();
             return Ok(data);
         }
 
