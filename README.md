@@ -1,5 +1,14 @@
 "# lagetronix-job-library-test-cqrs" 
 
+[POSTMAN-API-DOCUMENTATION](https://go.postman.co/workspace/Test~d967463c-4afb-4d85-9113-b973b3b83fa1/api/4eb1e8de-70e1-4f78-83dc-dc85627f9341)
+
+
+
+[SWAGGER-API-DOCUMENTATION(Ran from CLI)](https://localhost:5001/swagger)
+**OR**
+[SWAGGER-API-DOCUMENTATION(Ran from Visual Studio)](https://localhost:44367/swagger)
+
+
 ![project architecture](lagetronix-job-library-test-cqrs.drawio.png)
 
 To run the project run 
