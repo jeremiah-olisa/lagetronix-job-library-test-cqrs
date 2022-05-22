@@ -26,7 +26,9 @@ namespace API.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult<User>> Get(int id)
         {
-            return Ok(await _mediator.Send(new Get.Query { id = id }));
+            var data = await _mediator.Send(new Get.Query { id = id });
+            if(data == null) return NotFound();
+            return Ok(data);
         }
 
         // POST api/<UsersController>
