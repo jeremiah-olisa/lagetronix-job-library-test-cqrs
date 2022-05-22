@@ -7,9 +7,6 @@
 [SWAGGER-API-DOCUMENTATION (Ran from CLI)](https://localhost:5001/swagger)
 
 
-**OR**
-
-
 [SWAGGER-API-DOCUMENTATION (Ran from Visual Studio)](https://localhost:44367/swagger)
 
 
