@@ -12,9 +12,9 @@
 
 ![project architecture](lagetronix-job-library-test-cqrs.drawio.png)
 
-To run the project run 
+To run the api project
 
-`dotnet watch run -p Api`
+run `dotnet watch run -p Api` in the project root directory
 
 **OR**
 
@@ -30,6 +30,23 @@ open the `run.bat` file on a windows computer and `run.sh` on a Linux or Mac com
 2. Set API as the startup project **if** it is not the startup project.
 
 3. Press `control key + F5` and the swagger documentation will open up in your browser.
+
+To run the Acceptance Test
+
+run `dotnet test Tests`  in the project root directory
+
+**ONLY IF YOU HAVE DOTNET FRAMEWORK TOOLS**
+
+
+<u>**ON Visual Studio**</u>
+
+1. Open `Library.sln` 
+
+2. Right click on the `Tests Project` in the solution explorer.
+
+3. Click on `Run Tests` and the tests will run showing either success or failure.
+
+
 
 ### Project Architecture
 
