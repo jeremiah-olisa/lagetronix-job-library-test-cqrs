@@ -1,21 +1,13 @@
-﻿using MediatR;
-using Moq;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Tests.Brokers;
+using Xunit;
 
 namespace Tests
 {
+    [Collection(nameof(ApiTestCollection))]
     public class BaseTest
     {
-        public Mock<IMediator> _mediator;
-
-        public BaseTest(Mock<IMediator> mediator)
+        public BaseTest()
         {
-            _mediator = mediator;
         }
-
     }
 }

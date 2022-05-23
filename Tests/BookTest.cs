@@ -1,29 +1,105 @@
-﻿using Application.Books;
+﻿using Domain.Dtos;
+using System.Threading.Tasks;
+using Tests.Brokers;
+using Xunit;
+using Tynamix.ObjectFiller;
+using FluentAssertions;
 using Domain.Models;
-using MediatR;
-using Moq;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Xunit;
 
 namespace Tests
 {
     public class BookTest : BaseTest
     {
-        public BookTest(Mock<IMediator> mediator) : base(mediator)
+        private readonly ApiBroker _broker;
+
+        public BookTest(ApiBroker broker) =>
+            _broker = broker;
+
+        private CreateBookDto BookDto() => new Filler<CreateBookDto>().Create();
+        private CreateCategoryDto CategoryDto() => new Filler<CreateCategoryDto>().Create();
+
+
+
+        [Fact]
+        public async Task GetBook()
         {
+            // given
+            CreateCategoryDto inputCategory = CategoryDto();
+            Category categoryCreated = await _broker.CreateCategoryAsync(inputCategory);
+
+            CreateBookDto inputBook = BookDto();
+            inputBook.CategoryId = categoryCreated.Id;
+
+            Book bookCreated = await _broker.CreateBookAsync(inputBook);
+
+            bookCreated.Should().BeOfType<Book>();
+
+            // when
+            Book book = await _broker.GetBookAsync(bookCreated.Id);
+
+            //expected
+            book.Should().BeOfType<Book>();
+            Assert.Equal(inputBook.AuthorName, bookCreated.AuthorName);
+
+            await _broker.DeleteBookAsync(bookCreated.Id);
+            await _broker.DeleteCategoryAsync(categoryCreated.Id);
         }
 
         [Fact]
-        public void GetBooks()
+        public async Task GetBooks()
         {
-            //var list = new List.Query();
-            //var books = _mediator.Setup(m => m.Send(list)).ReturnsAsync();
+            // given
+            // when
+            List<Book> books = await _broker.GetBooksAsync();
 
-            //Assert.IsType<List<Book>>(books)    
+            //expected
+            books.Should().BeOfType<List<Book>>(); ;
+
+        }
+
+        [Fact]
+        public async Task CreateBook()
+        {
+            // given
+            CreateCategoryDto inputCategory = CategoryDto();
+            Category categoryCreated = await _broker.CreateCategoryAsync(inputCategory);
+
+            CreateBookDto inputBook = BookDto();
+            inputBook.CategoryId = categoryCreated.Id;
+
+            // when
+            Book bookCreated = await _broker.CreateBookAsync(inputBook);
+
+            bookCreated.Should().BeOfType<Book>();
+
+            await _broker.DeleteBookAsync(bookCreated.Id);
+            await _broker.DeleteCategoryAsync(categoryCreated.Id);
+        }
+
+        [Fact]
+        public async Task UpdateBook()
+        {
+            // given
+            CreateCategoryDto inputCategory = CategoryDto();
+            Category categoryCreated = await _broker.CreateCategoryAsync(inputCategory);
+
+            CreateBookDto createInputBook = BookDto();
+            createInputBook.CategoryId = categoryCreated.Id;
+
+            // when
+            Book bookCreated = await _broker.CreateBookAsync(createInputBook);
+
+            CreateBookDto updateInputBook = BookDto();
+            updateInputBook.CategoryId = categoryCreated.Id;
+            Book bookUpdated = await _broker.UpdateBookAsync(updateInputBook, bookCreated.Id);
+
+            bookUpdated.Should().BeOfType<Book>();
+            Assert.Equal(bookUpdated.AuthorName, updateInputBook.AuthorName);
+
+            await _broker.DeleteBookAsync(bookUpdated.Id);
+            await _broker.DeleteCategoryAsync(categoryCreated.Id);
 
         }
     }

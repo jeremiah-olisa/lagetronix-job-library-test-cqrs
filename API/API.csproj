@@ -22,4 +22,8 @@
     <ProjectReference Include="..\Library\Application.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Data\" />
+  </ItemGroup>
+
 </Project>
